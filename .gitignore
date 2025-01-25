@@ -1,0 +1,9 @@
+# Dependencies
+
+/backend/venv
+/backend/app/__pycache__
+/backend/__pycache__
+*.pyc
+
+# System files
+.DS_Store
