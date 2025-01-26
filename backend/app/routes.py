@@ -17,6 +17,8 @@ def home():
 @main.route('/api/test', methods=['GET'])
 def test_api():
     return jsonify({'status': 'API is working!'}), 200
+
+
 @main.route('/api/summarize', methods=['POST'])
 def summarize_video():
 
@@ -46,6 +48,12 @@ def summarize_video():
     except Exception as e:
         # Ensure API key is not included in error messages
         error_message = str(e)
+
+        if "Could not retrieve a transcript" in error_message:
+            return jsonify({
+                'error': 'This video does not have subtitles/captions available. Please try a different video that has closed captions enabled.'
+            }), 400
+        
         if api_key in error_message:
             error_message = error_message.replace(api_key, '[API KEY]')
 
