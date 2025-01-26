@@ -35,21 +35,25 @@ def summarize_video():
 
     try:
 
-        logging.info("Fetching video transcript...")
-        # Get video transcript
-        transcript = get_video_transcript(video_url)
+        logging.info("Starting transcript fetch for video: %s", video_url)
         
-        logging.info("Generating summary...")
-        # Generate summary using OpenAI
+        transcript = get_video_transcript(video_url)
+        logging.info("Transcript fetched successfully, length: %d", len(transcript))
+        
+        logging.info("Starting summary generation with OpenAI")
         summary = generate_summary(transcript, api_key)
+        logging.info("Summary generated successfully")  
 
-        logging.info("Summary generated successfully")    
         return jsonify({'summary': summary})
+    
     except Exception as e:
         # Ensure API key is not included in error messages
         error_message = str(e)
+        logging.error("Full error details: %s", error_message)
 
         if "Could not retrieve a transcript" in error_message:
+            logging.error("Transcript fetch failed for video: %s", video_url)
+            
             return jsonify({
                 'error': 'This video does not have subtitles/captions available. Please try a different video that has closed captions enabled.'
             }), 400
