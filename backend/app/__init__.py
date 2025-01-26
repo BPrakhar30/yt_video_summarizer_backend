@@ -13,7 +13,9 @@ def create_app():
                 "http://localhost:3000"
             ],
             "methods": ["OPTIONS", "POST"],
-            "allow_headers": ["Content-Type"]
+            "allow_headers": ["Content-Type"],
+            "expose_headers": ["Content-Type"],
+            "supports_credentials": True
         }
     })
 
