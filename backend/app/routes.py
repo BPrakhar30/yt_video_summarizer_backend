@@ -5,6 +5,18 @@ import logging
 
 main = Blueprint('main', __name__)
 
+# Root route
+@main.route('/')
+def home():
+    return jsonify({
+        "message": "YouTube Video Summarizer API",
+        "status": "running"
+    })
+
+# Test route
+@main.route('/api/test', methods=['GET'])
+def test_api():
+    return jsonify({'status': 'API is working!'}), 200
 @main.route('/api/summarize', methods=['POST'])
 def summarize_video():
 
