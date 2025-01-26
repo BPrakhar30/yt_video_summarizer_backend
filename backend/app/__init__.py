@@ -1,26 +1,24 @@
 from flask import Flask
 from flask_cors import CORS
-# from config import Config
 from .routes import main
 
 def create_app():
     app = Flask(__name__)
     
+    # More permissive CORS configuration
     CORS(app, resources={
-        r"/api/*": {
+        r"/*": {  # Changed from /api/* to /* to cover all routes
             "origins": [
-                "https://ytvideosummarizerfrontend.vercel.app/",
-                "http://localhost:3000"
+                "https://ytvideosummarizerfrontend.vercel.app",  # Removed trailing slash
+                "http://localhost:3000",
+                "https://ytvideosummarizerfrontend.vercel.app"  # Added without www
             ],
-            "methods": ["OPTIONS", "POST"],
-            "allow_headers": ["Content-Type"],
+            "methods": ["GET", "POST", "OPTIONS"],  # Added GET
+            "allow_headers": ["Content-Type", "Authorization", "Accept", "Origin"],  # Added more headers
             "expose_headers": ["Content-Type"],
-            "supports_credentials": True
+            "supports_credentials": False  # Changed to False since we're not using cookies
         }
     })
 
-    # app.config.from_object(Config)
-
     app.register_blueprint(main)
-
-    return app 
+    return app
