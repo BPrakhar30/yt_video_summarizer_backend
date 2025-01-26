@@ -9,7 +9,7 @@ def create_app():
     CORS(app, resources={
         r"/api/*": {
             "origins": [
-                "https://ytvideosummarizerfrontend-bzrutw81-prakhars-projects-83cfeaec.vercel.app",
+                "https://ytvideosummarizerfrontend.vercel.app/",
                 "http://localhost:3000"
             ],
             "methods": ["OPTIONS", "POST"],
